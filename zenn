@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Situs KUJENI - SMAN 1 PELABUHANRATU</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background-color: #f9f9f9;
+      color: #333;
+      overflow-x: hidden;
+      transition: margin-left 0.3s ease;
+    }
+
+    header {
+      background-color: #004080;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1001;
+      justify-content: flex-start;
+    }
+
+    header h1 {
+      margin-left: 20px;
+      font-size: 1.2rem;
+    }
+
+    .menu-toggle {
+      cursor: pointer;
+      width: 30px;
+      height: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 1100;
+    }
+
+    .bar {
+      height: 4px;
+      width: 100%;
+      background-color: white;
+      border-radius: 2px;
+      transition: 0.4s;
+    }
+
+    .menu-toggle.active .bar:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .menu-toggle.active .bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active .bar:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      height: 100vh;
+      width: 250px;
+      background-color: white;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+      padding-top: 60px;
+      transition: left 0.3s ease;
+      z-index: 1050;
+      border-radius: 0 10px 10px 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar.show {
+      left: 0;
+    }
+
+    .sidebar button {
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 15px 25px;
+      font-weight: 600;
+      color: #004080;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .sidebar button:hover {
+      background-color: #f0f0f0;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 100px auto 50px;
+      background: white;
+      padding: 30px 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgb(0 0 0 / 0.1);
+      min-height: 400px;
+      transition: margin-left 0.3s ease;
+    }
+
+    main.shift {
+      margin-left: 250px;
+    }
+
+    h2 {
+      color: #004080;
+      margin-bottom: 20px;
+    }
+
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 20px;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .gallery div {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      background-color: #e6f0ff;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .gallery div img {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-right: 15px;
+      flex-shrink: 0;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    }
+
+    .gallery div span {
+      flex-grow: 1;
+    }
+
+    .price {
+      width: 80px;
+      text-align: right;
+      font-weight: 700;
+      color: #004080;
+    }
+
+    footer {
+      display: none;
+    }
+
+    .profile-pic {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      margin: 10px auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .profile-name {
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #004080;
+      margin-bottom: 20px;
+    }
+
+    @media(max-width:600px) {
+      main {
+        margin: 130px 10px 50px 10px;
+        border-radius: 6px;
+        padding: 20px;
+      }
+      main.shift {
+        margin-left: 10px;
+      }
+      .gallery div {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .gallery div img {
+        margin-bottom: 8px;
+      }
+      .price {
+        width: 100%;
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="menu-toggle" id="menuToggle" onclick="toggleMenu()">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+  <h1>Situs KUJENI</h1>
+</header>
+
+<nav class="sidebar" id="sidebar">
+  <button onclick="showPage('biodata')">Biodata</button>
+  <button onclick="showPage('p5')">Proyek P5</button>
+</nav>
+
+<main id="mainContent">
+  <section id="biodata">
+    <h2>Biodata</h2>
+    <img src="https://i.imgur.com/Zz4rzVR.jpg" alt="Foto Profil KUJENI" class="profile-pic" />
+    <div class="profile-name">KUJENI</div>
+    <p><strong>Sekolah:</strong> SMAN 1 PELABUHANRATU</p>
+    <p><strong>Kelas:</strong> XI-9</p>
+    <p><strong>Hobi:</strong> FUTSAL</p>
+  </section>
+
+  <section id="p5" style="display:none;">
+    <h2>Proyek P5</h2>
+    <div class="gallery">
+      <div>
+        <img src="https://images.unsplash.com/photo-1571091718767-ec1881aaaf46?auto=format&fit=crop&w=80&q=80" alt="Roti Coklat" />
+        <span>Roti Coklat</span>
+        <span class="price">Rp5.000</span>
+      </div>
+      <div>
+        <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=80&q=80" alt="Bakso" />
+        <span>Bakso</span>
+        <span class="price">Rp10.000</span>
+      </div>
+      <div>
+        <img src="https://images.unsplash.com/photo-1505253210343-d6c4c1e6f2a6?auto=format&fit=crop&w=80&q=80" alt="Es Teh" />
+        <span>Es Teh</span>
+        <span class="price">Rp3.000</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('sidebar');
+  const mainContent = document.getElementById('mainContent');
+
+  function toggleMenu() {
+    menuToggle.classList.toggle('active');
+    sidebar.classList.toggle('show');
+    mainContent.classList.toggle('shift');
+  }
+
+  function showPage(pageId) {
+    document.querySelectorAll('main section').forEach(sec => {
+      sec.style.display = 'none';
+    });
+    document.getElementById(pageId).style.display = 'block';
+
+    if(window.innerWidth < 700){
+      toggleMenu();
+    }
+  }
+</script>
+
+</body>
+</html>
